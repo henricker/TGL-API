@@ -2,6 +2,7 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import User from 'App/Models/User'
 import CreateUserValidator from 'App/Validators/user-validators/CreateUserValidator'
 import UpdateUserValidator from 'App/Validators/user-validators/UpdateUserValidator'
+import moment from 'moment'
 
 export default class UsersController {
   public async create({ request, auth }: HttpContextContract) {
@@ -15,7 +16,16 @@ export default class UsersController {
   public async index({ auth }: HttpContextContract) {
     const { id } = await auth.use('api').authenticate()
 
-    return { ok: true }
+    const user = await User.findByOrFail('id', id)
+
+    const userJSON = user.serialize()
+
+    userJSON.remember_me_token = undefined
+    userJSON.token_created_at = undefined
+    userJSON.created_at = moment(userJSON.created_at).format('DD/MM/YYYY HH:MM:DD')
+    userJSON.updated_at = moment(userJSON.updated_at).format('DD/MM/YYYY HH:MM:SS')
+
+    return userJSON
   }
 
   public async update({ auth, request }: HttpContextContract) {
@@ -25,9 +35,9 @@ export default class UsersController {
 
     const data = await request.validate(UpdateUserValidator)
 
-    user?.merge(data)
+    user.merge(data)
 
-    await user?.save()
+    await user.save()
     return user
   }
 
