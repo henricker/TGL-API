@@ -12,7 +12,6 @@ import {
 import Bet from './Bet'
 import Welcome from 'App/Mailers/Welcome'
 import ForgotPassword from 'App/Mailers/ForgotPassword'
-// import Bet from './Bet'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
