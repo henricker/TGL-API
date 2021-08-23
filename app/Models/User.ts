@@ -1,6 +1,15 @@
 import { DateTime } from 'luxon'
 import Hash from '@ioc:Adonis/Core/Hash'
-import { column, beforeSave, BaseModel, beforeUpdate, afterCreate } from '@ioc:Adonis/Lucid/Orm'
+import {
+  column,
+  beforeSave,
+  BaseModel,
+  beforeUpdate,
+  afterCreate,
+  hasMany,
+  HasMany,
+} from '@ioc:Adonis/Lucid/Orm'
+import Bet from './Bet'
 import Welcome from 'App/Mailers/Welcome'
 import ForgotPassword from 'App/Mailers/ForgotPassword'
 // import Bet from './Bet'
@@ -36,6 +45,9 @@ export default class User extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
+  @hasMany(() => Bet)
+  public bets: HasMany<typeof Bet>
+
   @beforeSave()
   public static async hashPassword(user: User) {
     if (user.$dirty.password) user.password = await Hash.make(user.password)
@@ -50,6 +62,4 @@ export default class User extends BaseModel {
   public static async sendForgotPasswordMail(user: User) {
     if (user.$dirty.rememberMeToken) await new ForgotPassword(user).sendLater()
   }
-  // @hasMany(() => Bet)
-  // public bets: HasMany<typeof Bet>
 }
