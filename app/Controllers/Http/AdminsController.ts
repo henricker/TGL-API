@@ -1,5 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import User from 'App/Models/User'
+import moment from 'moment'
 
 export default class AdminsController {
   public async promoteUser({ params, response }: HttpContextContract) {
@@ -41,22 +42,28 @@ export default class AdminsController {
     }
   }
 
-  public async getAllUsers({ request }: HttpContextContract) {
-    const { page, limit } = request.qs()
-    let usersJSON = (
-      await User.query()
-        .orderBy('is_admin', 'desc')
-        .paginate(page ?? 1, limit ?? 15)
-    ).serialize()
+  public async getAllUsers({ request, response }: HttpContextContract) {
+    try {
+      let { page, limit } = request.qs()
 
-    usersJSON.data = usersJSON.data.map((user) => ({
-      id: user.id,
-      name: user.name,
-      is_admin: user.is_admin,
-      last_bet: user.last_bet,
-      created_at: user.created_at,
-    }))
+      let usersJSON = (
+        await User.query()
+          .orderBy('is_admin', 'desc')
+          .paginate(page ?? 1, limit ?? 15)
+      ).serialize()
 
-    return usersJSON
+      usersJSON.data = usersJSON.data.map((user) => ({
+        id: user.id,
+        name: user.name,
+        is_admin: user.is_admin,
+        last_bet: !user.last_bet ? null : moment(user.last_bet).format('DD/MM/YYYY HH:MM:SS'),
+        created_at: moment(user.created_at).format('DD/MM/YYYY HH:MM:SS'),
+        updated_at: moment(user.updated_at).format('DD/MM/YYYY HH:MM:SS'),
+      }))
+
+      return usersJSON
+    } catch (err) {
+      return response.status(400).send({ errors: [{ message: err.message }] })
+    }
   }
 }
