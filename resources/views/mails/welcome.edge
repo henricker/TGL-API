@@ -1,0 +1,61 @@
+<style>
+  body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background-color: white;
+  }
+
+  .container {
+      background-color: #F7F7F7;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+  }
+
+  .container h2 {
+      color: #707070;
+  }
+
+  .container p {
+      color: #868686;
+  }
+
+  .makeBet {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .makeBet p {
+    font-size: 1.2rem;
+  }
+
+  button {
+      padding: .5rem 2rem;
+      color: #B5C401;
+      font-weight: 500;
+      border-radius: .5rem;
+      cursor: pointer;
+      font-size: 2rem;
+  }
+
+</style>
+<div class="container">
+  <div class="presentation">
+    <h2>Welcome to TGL bets, {{ name }}!</h2>
+    <p>Now you have the freedom to bet as many times as you like!</p>
+  </div>
+  <div class="makeBet">
+    <p>Click below to login to your account and start betting ;)</p>
+    <a href="{{link}}">
+      <button>
+      New Bet ->
+    </button>
+    </a>
+  </div>
+</div>
