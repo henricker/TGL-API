@@ -6,6 +6,7 @@ import { formatter } from 'App/util/formatter-real'
 import moment from 'moment'
 import UpdateBetValidator from 'App/Validators/bet-validators/UpdateBetValidator'
 import validateBetNumbers from 'App/util/validate-numbers-bet'
+import { DateTime } from 'luxon'
 
 export default class BetsController {
   public async index({ auth, request, response }: HttpContextContract) {
@@ -41,7 +42,7 @@ export default class BetsController {
   }
 
   public async store({ request, response, auth }: HttpContextContract) {
-    const { id } = await auth.use('api').authenticate()
+    const user = await auth.use('api').authenticate()
 
     let data = await request.validate(CreateBetValidator)
 
@@ -55,12 +56,15 @@ export default class BetsController {
 
       await Bet.create({
         gameId: bet.gameId,
-        userId: id,
+        userId: user.id,
         numbers: bet.numbers.join(','),
       })
 
       return Number(game.price)
     })
+
+    user.lastBet = DateTime.local()
+    await user.save()
 
     let pricesResolved = await Promise.all(prices)
     let totalPrice = pricesResolved.reduce((total: number, current: number) => total + current)
