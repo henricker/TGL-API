@@ -278,6 +278,37 @@
       ],
       "aliases": [],
       "flags": []
+    },
+    "make:task": {
+      "settings": {
+        "loadApp": true
+      },
+      "commandPath": "adonis5-scheduler/build/commands/MakeTask",
+      "commandName": "make:task",
+      "description": "Generate task from template",
+      "args": [
+        {
+          "type": "string",
+          "propertyName": "name",
+          "name": "name",
+          "required": true,
+          "description": "Name of the task"
+        }
+      ],
+      "aliases": [],
+      "flags": []
+    },
+    "scheduler:run": {
+      "settings": {
+        "loadApp": true,
+        "stayAlive": true
+      },
+      "commandPath": "adonis5-scheduler/build/commands/SchedulerRun",
+      "commandName": "scheduler:run",
+      "description": "Start one or more workers",
+      "args": [],
+      "aliases": [],
+      "flags": []
     }
   },
   "aliases": {}
