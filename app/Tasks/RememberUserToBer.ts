@@ -5,8 +5,7 @@ import moment from 'moment'
 
 export default class RememberUserToBet extends BaseTask {
   public static get schedule() {
-    return '* * * * * *'
-    return '* * * * * *'
+    return '* * 9 * * *'
   }
 
   public static get useLock() {
@@ -16,13 +15,8 @@ export default class RememberUserToBet extends BaseTask {
   public async handle() {
     const users = await User.query()
     users.forEach(async (user) => {
-<<<<<<< HEAD
       if (user.lastBet && moment().subtract('7', 'days').isAfter(user.lastBet) && !user.isAdmin)
         await new RememberBet(user).sendLater()
-=======
-      if (user.lastBet && moment().subtract('7', 'days').isAfter(user.lastBet) && !user.isAdmin)
-        await new RememberBet(user).sendLater()
->>>>>>> sheduler
     })
   }
 }
