@@ -15,7 +15,7 @@ Route.group(() => {
     Route.get('/index', 'UsersController.index')
     Route.put('/update', 'UsersController.update')
     Route.delete('/delete', 'UsersController.destroy')
-  })
+  }).middleware('auth')
 
   Route.group(() => {
     Route.post('/create-bet', 'BetsController.store')
@@ -23,10 +23,10 @@ Route.group(() => {
     Route.get('/show-bet/:betId', 'BetsController.show')
     Route.delete('/delete-bet/:betId', 'BetsController.destroy')
     Route.patch('/update-bet/:betId', 'BetsController.update')
-  }).prefix('/bets')
-})
-  .prefix('/users')
-  .middleware('auth')
+  })
+    .prefix('/bets')
+    .middleware('auth')
+}).prefix('/users')
 
 Route.group(() => {
   Route.group(() => {
