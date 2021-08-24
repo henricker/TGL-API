@@ -5,7 +5,7 @@ import moment from 'moment'
 
 export default class RememberUserToBet extends BaseTask {
   public static get schedule() {
-    return '* * 9 * * *'
+    return '0 0 9 * * *'
   }
 
   public static get useLock() {
