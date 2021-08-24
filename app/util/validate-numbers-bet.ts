@@ -7,7 +7,7 @@ export default function validateBetNumbers(numbers: number[], game: Game): Objec
     }
   }
 
-  numbers.forEach((value) => {
+  for (const value of numbers) {
     if (value > game.range) {
       return {
         errors: [
@@ -17,7 +17,7 @@ export default function validateBetNumbers(numbers: number[], game: Game): Objec
         ],
       }
     }
-  })
+  }
 
   return undefined
 }
