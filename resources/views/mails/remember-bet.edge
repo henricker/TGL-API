@@ -1,0 +1,80 @@
+<style>
+	body {
+			margin: 0;
+			padding: 0;
+			height: 100vh;
+			background-color: white;
+	}
+
+	.container {
+			background-color: #F7F7F7;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			height: 100%;
+	}
+
+	.container h2 {
+			color: #707070;
+	}
+
+	.container p {
+			color: #868686;
+	}
+
+	.presentation {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.presentation .price {
+		color: #575246;
+	}
+
+	.presentation .warn {
+			color: #868686;
+			font-size: .7rem;
+	}
+
+	.makeBet {
+		margin-top: 1rem;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.makeBet p {
+		font-size: 1.2rem;
+	}
+
+	.makeBet p.token {
+		font-size: .9rem;
+	}
+
+	button {
+			padding: 1rem 2.4rem;
+			color: #B5C401;
+			font-weight: 500;
+			border-radius: .5rem;
+			cursor: pointer;
+			font-size: 1.5rem;
+	}
+</style>
+<div class="container">
+	<div class="presentation">
+		<h2>Make a bet now, {{ name }}!</h2>
+		<p class="price">We're missing you :(</p>
+		<p class="warn">Take advantage of today's beautiful day to place new bets!</p>
+	</div>
+	<div class="makeBet">
+		<p>Click below to place new bets! :D</p>
+		<a href="{{ link }}">
+			<button>
+		  New bet ->
+		</button>
+		</a>
+	</div>
+</div>
