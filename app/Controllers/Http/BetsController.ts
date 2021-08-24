@@ -70,8 +70,8 @@ export default class BetsController {
     let pricesResolved = await Promise.all(prices)
     let totalPrice = pricesResolved.reduce((total: number, current: number) => total + current)
 
-    await new NewBet(user, formatter.format(totalPrice ?? 0)).sendLater()
-    return { totalPrice: formatter.format(totalPrice ?? 0) }
+    await new NewBet(user, formatter.format(totalPrice ? totalPrice : 0)).sendLater()
+    return { totalPrice: formatter.format(totalPrice ? totalPrice : 0) }
   }
 
   public async show({ params, auth, response }: HttpContextContract) {
