@@ -29,6 +29,7 @@
     "@adonisjs/mail": "^7.2.3",
     "@adonisjs/repl": "^3.1.5",
     "@adonisjs/view": "^6.0.8",
+    "adonis5-scheduler": "^2.0.2",
     "luxon": "^2.0.2",
     "moment": "^2.29.1",
     "pg": "^8.7.1",
