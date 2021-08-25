@@ -1,0 +1,16 @@
+<style>
+  .subcontent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .subcontent p {
+    font-size: 1.2rem;
+  }
+</style>
+
+<div class="subcontent">
+  {{{ await $slots.main() }}}
+</div>
