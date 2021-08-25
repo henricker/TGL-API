@@ -48,7 +48,7 @@ export default class AdminsController {
 
       let usersJSON = (
         await User.query()
-          .orderBy('is_admin', 'desc')
+          .orderBy('is_admin', 'asc')
           .paginate(page ?? 1, limit ?? 15)
       ).serialize()
 
