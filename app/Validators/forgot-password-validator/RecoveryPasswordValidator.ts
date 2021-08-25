@@ -20,5 +20,6 @@ export default class RecoveryPasswordValidator {
     'required': '{{ field }} is required',
     'token.exists': 'Token not found',
     'password_confirmation.confirmed': 'Password and confirmed password does not match',
+    'password.regex': 'password to weak',
   }
 }
