@@ -1,23 +1,39 @@
 import Game from 'App/Models/Game'
 
-export default function validateBetNumbers(numbers: number[], game: Game): Object | undefined {
-  if (numbers.length !== game.maxNumber) {
-    return {
-      errors: [{ message: `The ${game.type} only allows ${game.maxNumber} numbers choosen` }],
-    }
-  }
+interface BetValidate {
+  gameId: number
+  numbers: number[]
+}
 
-  for (const value of numbers) {
-    if (value > game.range) {
-      return {
-        errors: [
-          {
-            message: `The ${game.type} only accepts values less than or equal to ${game.range}`,
-          },
-        ],
+interface ErrorValidate {
+  message: string
+}
+
+export default async function validateBetNumbers(
+  bets: BetValidate[]
+): Promise<(ErrorValidate[] | undefined)[]> {
+  const errors = await Promise.all(
+    bets.map(async (bet) => {
+      const game = await Game.findByOrFail('id', bet.gameId)
+      let errorBet: ErrorValidate[] = []
+
+      if (bet.numbers.length !== game!.maxNumber)
+        errorBet.push({
+          message: `The ${game.type} only allows ${game.maxNumber} numbers choosen`,
+        })
+
+      for (const value of bet.numbers) {
+        if (value > game.range && value > 0)
+          errorBet.push({
+            message: `The ${game.type} only accepts values leess than or equal to ${game.range}`,
+          })
       }
-    }
-  }
 
-  return undefined
+      if (errorBet.length === 0) return undefined
+
+      return errorBet
+    })
+  )
+
+  return errors.filter((error) => error !== undefined)
 }
