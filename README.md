@@ -11,6 +11,6 @@ npm run build
 docker-compose up
 ```
 
-Login diagram of API
+Logic diagram of API
 
 ![](presentation-readme/diagram.png)
