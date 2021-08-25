@@ -47,13 +47,11 @@ export default class BetsController {
 
     let data = await request.validate(CreateBetValidator)
 
-    //Now validate numbers
+    const errors = await validateBetNumbers(data.bets)
+    if (errors.length > 0) return response.status(422).send({ errors })
+
     const prices = data.bets.map(async (bet) => {
       const game = await Game.findByOrFail('id', bet.gameId)
-
-      const errorValidate = validateBetNumbers(bet.numbers, game)
-
-      if (errorValidate) return response.status(422).send(errorValidate)
 
       await Bet.create({
         gameId: bet.gameId,
@@ -114,11 +112,9 @@ export default class BetsController {
       if (bet.userId !== id)
         return response.status(401).send({ errors: [{ message: 'You not authorized' }] })
 
-      const game = await Game.findByOrFail('id', data.gameId)
+      const errors = await validateBetNumbers([data])
 
-      const errorValidate = validateBetNumbers(data.numbers, game)
-
-      if (errorValidate) return response.status(422).send(errorValidate)
+      if (errors.length > 0) return response.status(422).send(errors)
 
       bet.merge({
         gameId: data.gameId,
