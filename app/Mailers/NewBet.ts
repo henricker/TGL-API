@@ -13,6 +13,7 @@ export default class NewBet extends BaseMailer {
       .htmlView('mails/new-bet', {
         name: this.user.name,
         totalPrice: this.totalPrice,
+        link: 'https://tgl.bets.com/dashboard',
       })
   }
 }
