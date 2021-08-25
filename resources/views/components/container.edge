@@ -1,0 +1,30 @@
+<style>
+	body {
+			margin: 0;
+			padding: 0;
+			height: 100vh;
+			background-color: white;
+	}
+
+.container {
+  background-color: #F7F7F7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.container h2 {
+      color: #707070;
+  }
+
+.container p {
+    color: #868686;
+}
+
+</style>
+
+<div class="container">
+  {{{ await $slots.main() }}}
+</div>
