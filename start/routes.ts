@@ -10,7 +10,7 @@ Route.group(() => {
 }).prefix('/forgot-password')
 
 Route.group(() => {
-  Route.post('/create', 'UsersController.create')
+  Route.post('/create', 'UsersController.store')
   Route.group(() => {
     Route.get('/index', 'UsersController.index')
     Route.put('/update', 'UsersController.update')
