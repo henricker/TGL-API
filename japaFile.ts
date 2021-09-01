@@ -1,8 +1,8 @@
 import 'reflect-metadata'
+import execa from 'execa'
 import { join } from 'path'
 import getPort from 'get-port'
 import { configure } from 'japa'
-import execa from 'execa'
 import sourceMapSupport from 'source-map-support'
 
 process.env.NODE_ENV = 'testing'
