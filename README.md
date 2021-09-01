@@ -71,14 +71,10 @@ services:
    ports:
      - "5432:5432"
 ```
-
-- Crie um arquivo .env.testing e insira as seguintes variáveis:
-
-```
-PG_USER=test
-PG_PASSWORD=test
-PG_DB_NAME=test
-```
+### Testes unitários:
+ 
+ - formatter-real: Testando se estamos convertendo os valores no formato de real.
+ - validate-numbers-bet: Testando os erros e as funcionalidades do nosso validador de apostas.
 
 ## Informações adicionais
 
