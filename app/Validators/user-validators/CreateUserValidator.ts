@@ -24,5 +24,6 @@ export default class CreateUserValidator {
     'email.unique': 'email already exists',
     'name.minLength': 'name to short',
     'password.regex': 'password to weak',
+    'password_confirmation.confirmed': 'password and password_confirmation do not match',
   }
 }
