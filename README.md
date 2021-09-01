@@ -1,17 +1,21 @@
 # TGL API
 
 ## Como rodar essa API?
+
 ```
-npm i 
+npm i
 ```
+
 ```
 npm run build
 ```
+
 ```
 touch .env
 
 Nesse arquivo .env insira os dados do banco de dados e do serviço de email
 ```
+
 ```
 docker-compose up
 ```
@@ -34,9 +38,7 @@ docker-compose up
 
 - Foi criado um scheduler onde a cada 9:00 de cada dia será enviado um email convidando usuários que não apostaram nos últimos sete dias a apostarem
 
-
 ## Templates de email
-
 
 - Quando o usuário é criado, é enviado um email de boas vindas:
 
@@ -46,12 +48,38 @@ docker-compose up
 
   ![](readme-images/mails/newbet.png)
 
-
 - Quando um usuário não apostou nos últimos sete dias, todas as 9:00 AM será enviado um email convidando para apostar.
-  
+
   ![](readme-images/mails/placeABet.png)
+
+## Testes
+
+- Para rodar os testes decidi criar um container do docker com as seguintes características:
+
+```
+version "3"
+
+services:
+ db_test:
+   container_name: postgres_db_test
+   image: 'postgres:latest'
+   restart: always
+   environment:
+     POSTGRES_PASSWORD: test
+     POSTGRES_USER: test
+     POSTGRES_DB: test
+   ports:
+     - "5432:5432"
+```
+
+- Crie um arquivo .env.testing e insira as seguintes variáveis:
+
+```
+PG_USER=test
+PG_PASSWORD=test
+PG_DB_NAME=test
+```
 
 ## Informações adicionais
 
- - API desenvolvida no LabLuby da LubySofware!
- - Será incorporado testes unitários e de integração
+- API desenvolvida no LabLuby da LubySofware!
