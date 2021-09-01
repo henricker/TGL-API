@@ -9,9 +9,7 @@ interface ErrorValidate {
   message: string
 }
 
-export default async function validateBetNumbers(
-  bets: BetValidate[]
-): Promise<(ErrorValidate[] | undefined)[]> {
+export default async function validateBetNumbers(bets: BetValidate[]): Promise<ErrorValidate[][]> {
   const errors = await Promise.all(
     bets.map(async (bet) => {
       const game = await Game.findByOrFail('id', bet.gameId)
@@ -29,11 +27,9 @@ export default async function validateBetNumbers(
           })
       }
 
-      if (errorBet.length === 0) return undefined
-
       return errorBet
     })
   )
 
-  return errors.filter((error) => error !== undefined)
+  return errors.filter((error) => error.length > 0)
 }
