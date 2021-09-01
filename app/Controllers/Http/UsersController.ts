@@ -5,7 +5,7 @@ import UpdateUserValidator from 'App/Validators/user-validators/UpdateUserValida
 import moment from 'moment'
 
 export default class UsersController {
-  public async create({ request, auth }: HttpContextContract) {
+  public async store({ request, auth }: HttpContextContract) {
     const data = await request.validate(CreateUserValidator)
     const user = await User.create(data)
     const token = await auth.use('api').attempt(data.email, data.password)
