@@ -27,9 +27,6 @@ async function startHttpServer() {
   await new Ignitor(__dirname).httpServer().start()
 }
 
-/**
- * Configure test runner
- */
 configure({
   files: ['test/**/*.spec.ts'],
   before: [runMigrations, startHttpServer],
