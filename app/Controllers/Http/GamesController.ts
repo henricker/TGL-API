@@ -29,7 +29,7 @@ export default class GamesController {
 
     game.price = formatter.format(game.price)
 
-    return game
+    return { game }
   }
 
   public async show({ params, response }: HttpContextContract) {
