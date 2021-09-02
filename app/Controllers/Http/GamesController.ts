@@ -38,7 +38,7 @@ export default class GamesController {
       gameJSON.price = formatter.format(gameJSON.price)
       gameJSON.created_at = moment(gameJSON.createdAt).format('DD/MM/YYYY HH:MM:SS')
       gameJSON.updated_at = moment(gameJSON.updatedAt).format('DD/MM/YYYY HH:MM:SS')
-      return gameJSON
+      return { game: gameJSON }
     } catch (err) {
       return response.status(err.status).send({ errors: [{ message: err.message }] })
     }
