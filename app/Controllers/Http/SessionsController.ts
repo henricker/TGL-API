@@ -8,6 +8,6 @@ export default class SessionsController {
       expiresIn: '1days',
     })
 
-    return { token }
+    return { jwt: token }
   }
 }
