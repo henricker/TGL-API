@@ -1,45 +1,33 @@
-import Database from '@ioc:Adonis/Lucid/Database'
 import User from 'App/Models/User'
+import { UserFactory } from 'Database/factories'
 import test from 'japa'
 import supertest from 'supertest'
-import BASE_URL from '../util/base-url'
-import PersonFactory from '../util/person-factory'
+import BASE_URL from '../../util/base-url'
 
 test.group('Auth', (group) => {
-  const person = new PersonFactory()
+  let user: User
+  const userPassword = 'Password@123'
 
   group.before(async () => {
-    await Database.beginGlobalTransaction()
-    await User.create({
-      name: person.name,
-      email: person.email,
-      password: person.password + '@1Qw',
-    })
-  })
-
-  group.after(async () => {
-    await Database.rollbackGlobalTransaction()
+    user = await UserFactory.merge({ password: userPassword, isAdmin: true }).create()
   })
 
   test('ensure to authenticate the user and return the jwt token when everything is fine', async (assert) => {
-    const response = await supertest(BASE_URL)
-      .post('/session')
-      .send({
-        email: person.email,
-        password: person.password + '@1Qw',
-      })
-      .expect(200)
+    const response = await supertest(BASE_URL).post('/session').send({
+      email: user.email,
+      password: userPassword,
+    })
 
-    assert.exists(response.body.token)
-    assert.equal(response.body.token.type, 'bearer')
+    assert.exists(response.body.jwt)
+    assert.equal(response.body.jwt.type, 'bearer')
   })
 
   test("ensure not authenticate the user and return an error if the credentials don't match", async (assert) => {
     const response = await supertest(BASE_URL)
       .post('/session')
       .send({
-        email: person.email,
-        password: person.password + '@1w',
+        email: user.email,
+        password: 'hasuihasdjkha12863172',
       })
       .expect(400)
 
@@ -53,7 +41,7 @@ test.group('Auth', (group) => {
       .post('/session')
       .send({
         email: 'email.com',
-        password: person.password + '@1w',
+        password: userPassword,
       })
       .expect(422)
 
