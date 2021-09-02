@@ -37,9 +37,9 @@ Route.group(() => {
   }).prefix('/users')
 
   Route.group(() => {
-    Route.post('/create-game', 'GamesController.store')
-    Route.put('/update-game/:id', 'GamesController.update')
-    Route.delete('/delete-game/:id', 'GamesController.destroy')
+    Route.post('/', 'GamesController.store')
+    Route.put('/:id', 'GamesController.update')
+    Route.delete('/:id', 'GamesController.destroy')
   }).prefix('/games')
 })
   .prefix('/admin')
