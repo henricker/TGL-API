@@ -11,6 +11,6 @@ export default class SessionValidator {
 
   public messages = {
     'required': '{{ field }} is required',
-    'email.email': 'email invalid',
+    'email.email': 'email is invalid',
   }
 }
