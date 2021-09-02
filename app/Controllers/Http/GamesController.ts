@@ -52,7 +52,7 @@ export default class GamesController {
       game.merge(data)
 
       await game.save()
-      return game
+      return { game }
     } catch (err) {
       return response.status(err.status).send({ errors: [{ message: err.message }] })
     }
