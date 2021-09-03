@@ -24,7 +24,7 @@ export default class UsersController {
     userJSON.created_at = moment(userJSON.created_at).format('DD/MM/YYYY HH:MM:DD')
     userJSON.updated_at = moment(userJSON.updated_at).format('DD/MM/YYYY HH:MM:SS')
 
-    return userJSON
+    return { user: userJSON }
   }
 
   public async update({ auth, request }: HttpContextContract) {
@@ -37,7 +37,7 @@ export default class UsersController {
     user.merge(data)
 
     await user.save()
-    return user
+    return { user }
   }
 
   public async destroy({ auth }: HttpContextContract) {
