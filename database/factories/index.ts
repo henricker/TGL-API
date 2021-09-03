@@ -15,10 +15,10 @@ export const GameFactory = Factory.define(Game, ({ faker }) => {
   return {
     type: faker.random.word(),
     description: faker.lorem.paragraph(),
-    range: faker.datatype.number(),
-    price: faker.datatype.number(),
-    maxNumber: faker.datatype.number(),
+    range: faker.datatype.number(100),
+    price: faker.datatype.number(100),
+    maxNumber: faker.datatype.number(100),
     color: faker.internet.color(),
-    minCartValue: faker.datatype.number(),
+    minCartValue: faker.datatype.number(100),
   }
 }).build()

@@ -13,10 +13,6 @@ export default class UsersSchema extends BaseSchema {
       table.timestamp('last_bet').nullable()
       table.string('remember_me_token').nullable()
       table.timestamp('token_created_at').nullable()
-
-      /**
-       * Uses timestampz for PostgreSQL and DATETIME2 for MSSQL
-       */
       table.timestamp('created_at', { useTz: true }).notNullable()
       table.timestamp('updated_at', { useTz: true }).notNullable()
     })

@@ -17,18 +17,3 @@ export default class RememberBet extends BaseMailer {
       })
   }
 }
-// const mailerOptions: MailerData = {
-//   to: user.email,
-//   from: {
-//     address: 'tgl.luby@suport.com',
-//     name: 'TGL bets',
-//   },
-//   subject: 'Place a bet!',
-//   htmlView: {
-//     template: 'mails/remember_bet',
-//     data: {
-//       name: user.name,
-//       link: 'https://tgl.bets.com/dashboard',
-//     },
-//   },
-// }
