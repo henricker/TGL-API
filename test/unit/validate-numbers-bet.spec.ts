@@ -1,12 +1,12 @@
 import Database from '@ioc:Adonis/Lucid/Database'
-import Game from 'App/Models/Game'
 import validateBetNumbers from 'App/util/validate-numbers-bet'
+import { GameFactory } from 'Database/factories'
 import test from 'japa'
 
 test.group('Validate numbers of bets', (group) => {
   group.before(async () => {
     await Database.beginGlobalTransaction()
-    await Game.create({
+    await GameFactory.merge({
       type: 'Mega-Sena',
       description:
         'Escolha 6 números dos 60 disponíveis na mega-sena. Ganhe com 6, 5 ou 4 acertos. São realizados dois sorteios semanais para você apostar e torcer para ficar milionário.',
@@ -15,7 +15,7 @@ test.group('Validate numbers of bets', (group) => {
       maxNumber: 6,
       color: '#01AC66',
       minCartValue: 30,
-    })
+    }).create()
   })
 
   group.after(async () => {
