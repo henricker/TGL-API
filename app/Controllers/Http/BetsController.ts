@@ -79,21 +79,25 @@ export default class BetsController {
       const bet = await Bet.findByOrFail('id', betId)
 
       if (bet.userId !== id)
-        return response.status(401).send({ errors: [{ message: 'You not authorized' }] })
+        return response
+          .status(403)
+          .send({ errors: [{ message: 'E_FORBIDDEN_ACCESS: You not authorized' }] })
 
       await bet.load('game')
 
       const betJSON = bet.serialize()
       return {
-        id: betJSON.id,
-        numbers: betJSON.numbers,
-        created_at: moment(betJSON.created_at).format('DD/MM/YYYY HH:MM:SS'),
-        updated_at: moment(betJSON.updated_at).format('DD/MM/YYYY HH:MM:SS'),
-        game: {
-          id: betJSON.game.id,
-          type: betJSON.game.type,
-          color: betJSON.game.color,
-          price: formatter.format(Number(betJSON.game.price)),
+        bet: {
+          id: betJSON.id,
+          numbers: betJSON.numbers,
+          created_at: moment(betJSON.created_at).format('DD/MM/YYYY HH:MM:SS'),
+          updated_at: moment(betJSON.updated_at).format('DD/MM/YYYY HH:MM:SS'),
+          game: {
+            id: betJSON.game.id,
+            type: betJSON.game.type,
+            color: betJSON.game.color,
+            price: formatter.format(Number(betJSON.game.price)),
+          },
         },
       }
     } catch (err) {
@@ -110,7 +114,9 @@ export default class BetsController {
       const bet = await Bet.findByOrFail('id', betId)
 
       if (bet.userId !== id)
-        return response.status(401).send({ errors: [{ message: 'You not authorized' }] })
+        return response
+          .status(403)
+          .send({ errors: [{ message: 'E_FORBIDDEN_ACCESS: You not authorized' }] })
 
       const errors = await validateBetNumbers([data])
 
@@ -122,6 +128,7 @@ export default class BetsController {
       })
 
       await bet.save()
+      return 'bet updated successfully'
     } catch (err) {
       return response.status(err.status).send({ errors: [{ message: err.message }] })
     }
@@ -135,9 +142,12 @@ export default class BetsController {
       const bet = await Bet.findByOrFail('id', betId)
 
       if (bet.userId !== id)
-        return response.status(401).send({ errors: [{ message: 'You not authorized' }] })
+        return response
+          .status(403)
+          .send({ errors: [{ message: 'E_FORBIDDEN_ACCESS: You not authorized' }] })
 
       await bet.delete()
+      return 'bet deleted successfully'
     } catch (err) {
       return response.status(err.status).send({ errors: [{ message: err.message }] })
     }
