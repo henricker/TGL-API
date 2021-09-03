@@ -10,11 +10,11 @@ Route.group(() => {
 }).prefix('/forgot-password')
 
 Route.group(() => {
-  Route.post('/create', 'UsersController.store')
+  Route.post('/', 'UsersController.store')
   Route.group(() => {
-    Route.get('/index', 'UsersController.index')
-    Route.put('/update', 'UsersController.update')
-    Route.delete('/delete', 'UsersController.destroy')
+    Route.get('/', 'UsersController.index')
+    Route.put('/', 'UsersController.update')
+    Route.delete('/', 'UsersController.destroy')
   }).middleware('auth')
 
   Route.group(() => {
