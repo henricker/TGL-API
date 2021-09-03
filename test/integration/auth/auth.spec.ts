@@ -1,3 +1,4 @@
+import Database from '@ioc:Adonis/Lucid/Database'
 import User from 'App/Models/User'
 import { UserFactory } from 'Database/factories'
 import test from 'japa'
@@ -9,7 +10,12 @@ test.group('Auth', (group) => {
   const userPassword = 'Password@123'
 
   group.before(async () => {
+    await Database.beginGlobalTransaction()
     user = await UserFactory.merge({ password: userPassword, isAdmin: true }).create()
+  })
+
+  group.after(async () => {
+    await Database.rollbackGlobalTransaction()
   })
 
   test('ensure to authenticate the user and return the jwt token when everything is fine', async (assert) => {
