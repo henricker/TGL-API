@@ -18,9 +18,8 @@ export default class UpdateUserValidator {
 
   public messages = {
     'required': '{{ field }} is required',
-    'email.email': 'email invalid',
+    'email.email': 'email is invalid',
     'email.unique': 'email already exists',
     'name.minLength': 'name to short',
-    'password.regex': 'password to weak',
   }
 }
