@@ -16,7 +16,7 @@ test.group('Create user', (group) => {
   test('ensure the user can be created when everything is fine', async (assert) => {
     const person = new PersonFactory()
     const response = await supertest(BASE_URL)
-      .post('/users/create')
+      .post('/users')
       .send({
         name: person.name,
         email: person.email,
@@ -33,7 +33,7 @@ test.group('Create user', (group) => {
   test('ensure the user cannot be created if the email already exists', async (assert) => {
     const person = new PersonFactory()
     await supertest(BASE_URL)
-      .post('/users/create')
+      .post('/users')
       .send({
         name: person.name,
         email: person.email,
@@ -43,7 +43,7 @@ test.group('Create user', (group) => {
       .expect(200)
 
     const response = await supertest(BASE_URL)
-      .post('/users/create')
+      .post('/users')
       .send({
         name: person.name,
         email: person.email,
@@ -64,7 +64,7 @@ test.group('Create user', (group) => {
   test('ensure the user cannot be created if email is invalid', async (assert) => {
     const person = new PersonFactory()
     const response = await supertest(BASE_URL)
-      .post('/users/create')
+      .post('/users')
       .send({
         name: person.name,
         email: 'email.com',
@@ -85,7 +85,7 @@ test.group('Create user', (group) => {
   test('ensure the user cannot be created if passoword to weak', async (assert) => {
     const person = new PersonFactory()
     const response = await supertest(BASE_URL)
-      .post('/users/create')
+      .post('/users')
       .send({
         name: person.name,
         email: person.email,
@@ -106,7 +106,7 @@ test.group('Create user', (group) => {
   test('ensure the user cannot be created if the password and password_confirmation do not match', async (assert) => {
     const person = new PersonFactory()
     const response = await supertest(BASE_URL)
-      .post('/users/create')
+      .post('/users')
       .send({
         name: person.name,
         email: person.email,
@@ -131,7 +131,7 @@ test.group('Create user', (group) => {
   test('ensure the user cannot be created if the property name has length less than 2', async (assert) => {
     const person = new PersonFactory()
     const response = await supertest(BASE_URL)
-      .post('/users/create')
+      .post('/users')
       .send({
         name: 'a',
         email: person.email,
@@ -151,7 +151,7 @@ test.group('Create user', (group) => {
 
   test('ensure the user cannot be create if data is invalid', async (assert) => {
     const response = await supertest(BASE_URL)
-      .post('/users/create')
+      .post('/users')
       .send({
         name: '',
         email: '',
