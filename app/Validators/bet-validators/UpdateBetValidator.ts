@@ -11,6 +11,6 @@ export default class UpdateBetValidator {
 
   public messages = {
     'required': '{{ field }} is required',
-    'game.exists': 'game not exists',
+    'gameId.exists': 'game not exists',
   }
 }
