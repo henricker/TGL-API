@@ -18,11 +18,11 @@ Route.group(() => {
   }).middleware('auth')
 
   Route.group(() => {
-    Route.post('/create-bet', 'BetsController.store')
-    Route.get('/get-bets', 'BetsController.index')
-    Route.get('/show-bet/:betId', 'BetsController.show')
-    Route.delete('/delete-bet/:betId', 'BetsController.destroy')
-    Route.patch('/update-bet/:betId', 'BetsController.update')
+    Route.post('/', 'BetsController.store')
+    Route.get('/', 'BetsController.index')
+    Route.get('/:betId', 'BetsController.show')
+    Route.delete('/:betId', 'BetsController.destroy')
+    Route.patch('/:betId', 'BetsController.update')
   })
     .prefix('/bets')
     .middleware('auth')
