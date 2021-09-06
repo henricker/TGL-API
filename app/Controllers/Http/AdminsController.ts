@@ -36,7 +36,7 @@ export default class AdminsController {
 
       await user.delete()
 
-      return response.send('user removed')
+      return response.send('user deleted')
     } catch (err) {
       return response.status(404).send({ errors: [{ message: 'user not found' }] })
     }
