@@ -6,7 +6,7 @@ Route.get('/games/:id', 'GamesController.show')
 
 Route.group(() => {
   Route.post('/', 'ForgotPasswordsController.store')
-  Route.put('/recovery', 'ForgotPasswordsController.update')
+  Route.patch('/recovery', 'ForgotPasswordsController.update')
 }).prefix('/forgot-password')
 
 Route.group(() => {
