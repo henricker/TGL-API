@@ -18,8 +18,8 @@ export default class RecoveryPasswordValidator {
 
   public messages = {
     'required': '{{ field }} is required',
-    'token.exists': 'Token not found',
-    'password_confirmation.confirmed': 'Password and confirmed password does not match',
+    'token.exists': 'token not found',
+    'password_confirmation.confirmed': 'Password and confirmed password do not match',
     'password.regex': 'password to weak',
   }
 }
