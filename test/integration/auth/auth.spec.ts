@@ -57,7 +57,7 @@ test.group('Auth', (group) => {
     assert.propertyVal(response.body.errors[0], 'message', 'email is invalid')
   })
 
-  test('ensure not authenticate the user and return error if data is invalid', async (assert) => {
+  test('ensure not authenticate the user and return error when some data is invalid', async (assert) => {
     const response = await supertest(BASE_URL)
       .post('/session')
       .send({
@@ -70,5 +70,20 @@ test.group('Auth', (group) => {
     assert.equal(2, response.body.errors.length)
     assert.propertyVal(response.body.errors[0], 'message', 'email is required')
     assert.propertyVal(response.body.errors[1], 'message', 'password is required')
+  })
+
+  test('ensure not authenticate user and return error when some data is not string', async (assert) => {
+    const response = await supertest(BASE_URL)
+      .post('/session')
+      .send({
+        email: 1,
+        password: 1,
+      })
+      .expect(422)
+
+    assert.exists(response.body.errors)
+    assert.equal(2, response.body.errors.length)
+    assert.propertyVal(response.body.errors[0], 'message', 'string validation failed')
+    assert.propertyVal(response.body.errors[1], 'message', 'string validation failed')
   })
 })
