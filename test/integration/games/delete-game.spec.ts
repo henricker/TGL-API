@@ -66,4 +66,20 @@ test.group('Delete game', async (group) => {
       'E_UNAUTHORIZED_ACCESS: You are not authorized for this route.'
     )
   })
+
+  test('ensure return error when game not exists', async (assert) => {
+    const { jwt } = (
+      await supertest(BASE_URL)
+        .post('/session')
+        .send({ email: admin.email, password: adminPassword })
+    ).body
+
+    const response = await supertest(BASE_URL)
+      .delete('/admin/games/2')
+      .set('Authorization', `Bearer ${jwt.token}`)
+      .expect(404)
+
+    assert.exists(response.body.errors)
+    assert.propertyVal(response.body.errors[0], 'message', 'E_ROW_NOT_FOUND: Row not found')
+  })
 })
