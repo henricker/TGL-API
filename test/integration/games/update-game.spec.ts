@@ -214,4 +214,30 @@ test.group('Update game', (group) => {
     assert.propertyVal(response.body.errors[0], 'field', 'color')
     assert.propertyVal(response.body.errors[0], 'rule', 'regex')
   })
+
+  test('ensure return error when a game specified by id not exists', async (assert) => {
+    const { jwt } = (
+      await supertest(BASE_URL)
+        .post('/session')
+        .send({ email: admin.email, password: adminPassword })
+    ).body
+
+    const response = await supertest(BASE_URL)
+      .put('/admin/games/2')
+      .send({
+        type: 'Mega-Sena',
+        description:
+          'Escolha 6 números dos 60 disponíveis na mega-sena. Ganhe com 6, 5 ou 4 acertos. São realizados dois sorteios semanais para você apostar e torcer para ficar milionário.',
+        range: 60,
+        price: 4.5,
+        max_number: 6,
+        color: '#ffffff',
+        min_cart_value: 30,
+      })
+      .set('Authorization', `Bearer ${jwt.token}`)
+      .expect(404)
+
+    assert.exists(response.body.errors)
+    assert.propertyVal(response.body.errors[0], 'message', 'E_ROW_NOT_FOUND: Row not found')
+  })
 })
