@@ -205,7 +205,7 @@ test.group('Create bet', (group) => {
     assert.propertyVal(response.body.errors[0], 'message', 'number validation failed')
   })
 
-  test('ensure not to create a bet when any field is invalid', async (assert) => {
+  test('ensure not to create a bet when some field is invalid', async (assert) => {
     const response = await supertest(BASE_URL)
       .post('/users/bets')
       .set('Authorization', `Bearer ${jwt.token}`)
