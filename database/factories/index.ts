@@ -25,5 +25,7 @@ export const GameFactory = Factory.define(Game, ({ faker }) => {
 }).build()
 
 export const BetFactory = Factory.define(Bet, ({ faker }) => {
-  return {}
+  return {
+    gameId: faker.datatype.number(),
+  }
 }).build()
