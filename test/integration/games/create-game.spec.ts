@@ -21,7 +21,7 @@ test.group('Create game', (group) => {
     await Database.rollbackGlobalTransaction()
   })
 
-  test('ensure game is been created when everthing is fine and admin is authenticated', async (assert) => {
+  test('ensure game is been created when everthing all is fine and admin is authenticated', async (assert) => {
     const { jwt } = (
       await supertest(BASE_URL)
         .post('/session')
@@ -100,7 +100,7 @@ test.group('Create game', (group) => {
     )
   })
 
-  test('ensure game is not been created when data is invalid', async (assert) => {
+  test('ensure game is not been created when some data is invalid', async (assert) => {
     const { jwt } = (
       await supertest(BASE_URL)
         .post('/session')
