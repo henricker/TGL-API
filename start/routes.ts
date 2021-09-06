@@ -33,7 +33,7 @@ Route.group(() => {
     Route.patch('/promote-user/:userId', 'AdminsController.promoteUser')
     Route.patch('/demote-user/:userId', 'AdminsController.demoteUser')
     Route.delete('/delete-user/:userId', 'AdminsController.deleteUser')
-    Route.get('/all-users', 'AdminsController.getAllUsers')
+    Route.get('/', 'AdminsController.getAllUsers')
   }).prefix('/users')
 
   Route.group(() => {
