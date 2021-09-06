@@ -4,6 +4,7 @@ import test from 'japa'
 import supertest from 'supertest'
 import JwtType from '../../util/jwtType-inteface'
 import BASE_URL from '../../util/base-url'
+import randomBet from '../../util/random-bet'
 
 test.group('Create bet', (group) => {
   const userEmail = 'henricker@email.com'
@@ -49,11 +50,11 @@ test.group('Create bet', (group) => {
         bets: [
           {
             gameId: 1,
-            numbers: [1, 2, 3, 4, 5, 6],
+            numbers: randomBet(6, 60),
           },
           {
             gameId: 1,
-            numbers: [60, 23, 56, 42, 4, 2],
+            numbers: randomBet(6, 60),
           },
         ],
       })
@@ -73,11 +74,11 @@ test.group('Create bet', (group) => {
         bets: [
           {
             gameId: 1,
-            numbers: [1, 2, 3, 4, 5, 6],
+            numbers: randomBet(6, 60),
           },
           {
             gameId: 1,
-            numbers: [60, 23, 56, 42, 4, 2],
+            numbers: randomBet(6, 60),
           },
         ],
       })
@@ -99,7 +100,7 @@ test.group('Create bet', (group) => {
         bets: [
           {
             gameId: 2,
-            numbers: [60, 23, 56, 42, 4, 2],
+            numbers: randomBet(6, 60),
           },
         ],
       })
@@ -133,7 +134,7 @@ test.group('Create bet', (group) => {
           'bet',
           {
             gameId: 1,
-            numbers: [60, 23, 56, 42, 4, 2],
+            numbers: randomBet(6, 60),
           },
         ],
       })
@@ -152,11 +153,11 @@ test.group('Create bet', (group) => {
         bets: [
           {
             gameId: 'number',
-            numbers: [60, 23, 56, 42, 4, 2],
+            numbers: randomBet(6, 60),
           },
           {
             gameId: 1,
-            numbers: [34, 23, 54, 12, 8, 2],
+            numbers: randomBet(6, 60),
           },
         ],
       })
