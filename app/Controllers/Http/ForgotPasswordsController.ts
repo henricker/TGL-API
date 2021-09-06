@@ -16,6 +16,7 @@ export default class ForgotPasswordsController {
     user.tokenCreatedAt = DateTime.now()
 
     await user.save()
+    return 'Check the token in your email'
   }
 
   public async update({ request }: HttpContextContract) {
@@ -31,5 +32,6 @@ export default class ForgotPasswordsController {
     user.password = password
 
     await user.save()
+    return 'password updated successfully!'
   }
 }
