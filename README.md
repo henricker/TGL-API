@@ -52,30 +52,6 @@ docker-compose up
 
   ![](readme-images/mails/placeABet.png)
 
-## Testes
-
-- Para rodar os testes decidi criar um container do docker com as seguintes características:
-
-```
-version "3"
-
-services:
- db_test:
-   container_name: postgres_db_test
-   image: 'postgres:latest'
-   restart: always
-   environment:
-     POSTGRES_PASSWORD: test
-     POSTGRES_USER: test
-     POSTGRES_DB: test
-   ports:
-     - "5432:5432"
-```
-### Testes unitários:
- 
- - formatter-real: Testando se estamos convertendo os valores no formato de real.
- - validate-numbers-bet: Testando os erros e as funcionalidades do nosso validador de apostas.
-
 ## Informações adicionais
 
 - API desenvolvida no LabLuby da LubySofware!
