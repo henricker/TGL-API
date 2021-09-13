@@ -1,4 +1,5 @@
 import Database from '@ioc:Adonis/Lucid/Database'
+import { UserFactory } from 'Database/factories'
 import test from 'japa'
 import supertest from 'supertest'
 import BASE_URL from '../../util/base-url'
@@ -31,17 +32,7 @@ test.group('Create user', (group) => {
   })
 
   test('ensure the user cannot be created if the email already exists', async (assert) => {
-    const person = new PersonFactory()
-    await supertest(BASE_URL)
-      .post('/users')
-      .send({
-        name: person.name,
-        email: person.email,
-        password: person.password + '@Aq1',
-        password_confirmation: person.password + '@Aq1',
-      })
-      .expect(200)
-
+    const person = await UserFactory.merge({ email: 'henrique@email.com' }).create()
     const response = await supertest(BASE_URL)
       .post('/users')
       .send({
