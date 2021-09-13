@@ -23,13 +23,17 @@ export default class GamesController {
     }
   }
 
-  public async store({ request }: HttpContextContract) {
-    const data = await request.validate(GameValidator)
-    let game = (await Game.create(data)).serialize()
+  public async store({ request, response }: HttpContextContract) {
+    try {
+      const data = await request.validate(GameValidator)
+      let game = (await Game.create(data)).serialize()
 
-    game.price = formatter.format(game.price)
+      game.price = formatter.format(game.price)
 
-    return { game }
+      return { game }
+    } catch (err) {
+      return response.status(400).send({ errors: [{ message: err.message }] })
+    }
   }
 
   public async show({ params, response }: HttpContextContract) {
