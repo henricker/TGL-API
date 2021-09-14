@@ -1,6 +1,6 @@
 # TGL API
 
-## Como rodar essa API?
+## How to run the project?
 
 ```
 npm i
@@ -11,47 +11,55 @@ npm run build
 ```
 
 ```
-touch .env
-
-Nesse arquivo .env insira os dados do banco de dados e do serviço de email
+In this .env file enter the database and email service data
 ```
 
 ```
 docker-compose up
 ```
 
-## Diagrama lógico do banco de dados
+```
+Now everything is running!
+```
 
-![](readme-images/diagram.png)
+## Database logic diagram
 
-## Sobre o projeto
+![](resources/readme-images/diagram.png)
 
-- A API possui dois tipos de usuários, os usuários comuns e os administradores.
+## About the project
 
-- Tanto os administradores, quanto os usuários devem estar autenticados para realizarem suas devidas funções.
+- The API has two types of users, common users and administrators.
 
-- A função dos ADMS são de verificar todos os usuários, promover, despromover novos administradores e criar e gerenciar os jogos da loteria
+- Both administrators and users must be authenticated to perform their duties.
 
-- Os usuários podem criar e administrar suas apostas, alterar seus dados e deletar a conta
+- The function of ADMS is to check all users, promote, demote new administrators and create and manage lottery games
 
-- As rotas para visualizar os jogos, criar novos usuários e de "esqueci minha senha" não necessitam de autenticação
+- Users can create and manage their bets, change their data and delete the account
 
-- Foi criado um scheduler onde a cada 9:00 de cada dia será enviado um email convidando usuários que não apostaram nos últimos sete dias a apostarem
+- Routes to view games, create new users and "forgot my password" do not require authentication
+
+- A scheduler was created where every 9:00 of each day an email will be sent inviting users who have not bet in the last seven days to bet
+
+
 
 ## Templates de email
 
-- Quando o usuário é criado, é enviado um email de boas vindas:
+- When the user is created, a welcome email is sent:
 
   ![](resources/readme-images/mails/welcome.png)
 
-- Quando um usuário realiza uma nova aposta, é enviado um email mostando que ele realizou uma aposta e o valor total das apostas
+- When a user places a new bet, an email is sent showing that he has placed a bet and the total value of the bets
 
-  ![](resources/readme-images/mails/newbet.png)
+  ![](resources/readme-images/mails/newBet.png)
 
-- Quando um usuário não apostou nos últimos sete dias, todas as 9:00 AM será enviado um email convidando para apostar.
+- When a user has not bet in the last seven days, every 9:00 AM an email will be sent inviting them to bet.
 
   ![](resources/readme-images/mails/placeABet.png)
 
+- When the user requests a password recovery
+
+  ![](resources/readme-images/mails/forgot-password.png)
+
 ## Informações adicionais
 
-- API desenvolvida no LabLuby da LubySofware!
+- API developed in LabLuby by LubySofware!
