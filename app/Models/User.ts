@@ -55,7 +55,6 @@ export default class User extends BaseModel {
 
   @afterCreate()
   public static async sendWelcomeMail(user: User) {
-    //await new Welcome(user).sendLater()
     await producer.connect()
     await producer.sendMessage(
       [
@@ -77,7 +76,6 @@ export default class User extends BaseModel {
   @beforeUpdate()
   public static async sendForgotPasswordMail(user: User) {
     if (user.$dirty.rememberMeToken) {
-      //await new ForgotPassword(user).sendLater()
       await producer.connect()
       await producer.sendMessage(
         [

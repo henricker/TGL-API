@@ -7,7 +7,6 @@ import moment from 'moment'
 import UpdateBetValidator from 'App/Validators/bet-validators/UpdateBetValidator'
 import validateBetNumbers from 'App/util/validate-numbers-bet'
 import { DateTime } from 'luxon'
-//import NewBet from 'App/Mailers/NewBet'
 import producer from '../../../kafka-producer/producer'
 
 interface BetPlaced {
@@ -82,7 +81,6 @@ export default class BetsController {
     let pricesResolved = await Promise.all(prices)
     let totalPrice = pricesResolved.reduce((total: number, current: number) => total + current)
 
-    //await new NewBet(user, formatter.format(totalPrice ? totalPrice : 0)).sendLater()
     await producer.connect()
     await producer.sendMessage(
       [
