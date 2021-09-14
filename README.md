@@ -42,15 +42,15 @@ docker-compose up
 
 - Quando o usuário é criado, é enviado um email de boas vindas:
 
-  ![](readme-images/mails/welcome.png)
+  ![](resources/readme-images/mails/welcome.png)
 
 - Quando um usuário realiza uma nova aposta, é enviado um email mostando que ele realizou uma aposta e o valor total das apostas
 
-  ![](readme-images/mails/newbet.png)
+  ![](resources/readme-images/mails/newbet.png)
 
 - Quando um usuário não apostou nos últimos sete dias, todas as 9:00 AM será enviado um email convidando para apostar.
 
-  ![](readme-images/mails/placeABet.png)
+  ![](resources/readme-images/mails/placeABet.png)
 
 ## Informações adicionais
 
