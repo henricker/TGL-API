@@ -10,8 +10,6 @@ import {
   HasMany,
 } from '@ioc:Adonis/Lucid/Orm'
 import Bet from './Bet'
-//import Welcome from 'App/Mailers/Welcome'
-//import ForgotPassword from 'App/Mailers/ForgotPassword'
 import producer from '../../kafka-producer/producer'
 
 export default class User extends BaseModel {
