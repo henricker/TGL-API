@@ -7,7 +7,7 @@ import moment from 'moment'
 export default class UsersController {
   public async store({ request, auth }: HttpContextContract) {
     const data = await request.validate(CreateUserValidator)
-    const user = await User.create(data)
+    const user = await User.create({ ...data, isAdmin: false })
     const token = await auth.use('api').attempt(data.email, data.password)
     return { user, token }
   }
