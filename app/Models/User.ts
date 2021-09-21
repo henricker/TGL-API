@@ -10,8 +10,7 @@ import {
   HasMany,
 } from '@ioc:Adonis/Lucid/Orm'
 import Bet from './Bet'
-import Welcome from 'App/Mailers/Welcome'
-import ForgotPassword from 'App/Mailers/ForgotPassword'
+import producer from '../../kafka-producer/producer'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -24,7 +23,7 @@ export default class User extends BaseModel {
   public email: string
 
   @column()
-  public isAdmin: boolean
+  public roleId: number
 
   @column({ serializeAs: null })
   public password: string
@@ -54,11 +53,44 @@ export default class User extends BaseModel {
 
   @afterCreate()
   public static async sendWelcomeMail(user: User) {
-    await new Welcome(user).sendLater()
+    await producer.connect()
+    await producer.sendMessage(
+      [
+        {
+          value: JSON.stringify({
+            contact: {
+              name: user.name,
+              email: user.email,
+            },
+            template: 'welcome-user',
+          }),
+        },
+      ],
+      'mailer-event'
+    )
+    await producer.disconect()
   }
 
   @beforeUpdate()
   public static async sendForgotPasswordMail(user: User) {
-    if (user.$dirty.rememberMeToken) await new ForgotPassword(user).sendLater()
+    if (user.$dirty.rememberMeToken) {
+      await producer.connect()
+      await producer.sendMessage(
+        [
+          {
+            value: JSON.stringify({
+              contact: {
+                name: user.name,
+                email: user.email,
+                remember_me_token: user.rememberMeToken,
+              },
+              template: 'forgot-password-user',
+            }),
+          },
+        ],
+        'mailer-event'
+      )
+      await producer.disconect()
+    }
   }
 }

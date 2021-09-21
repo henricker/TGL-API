@@ -7,7 +7,14 @@ import moment from 'moment'
 import UpdateBetValidator from 'App/Validators/bet-validators/UpdateBetValidator'
 import validateBetNumbers from 'App/util/validate-numbers-bet'
 import { DateTime } from 'luxon'
-import NewBet from 'App/Mailers/NewBet'
+import producer from '../../../kafka-producer/producer'
+import User from 'App/Models/User'
+
+interface BetPlaced {
+  game: string
+  color: string
+  numbers: string
+}
 
 export default class BetsController {
   public async index({ auth, request, response }: HttpContextContract) {
@@ -50,13 +57,20 @@ export default class BetsController {
     const errors = await validateBetNumbers(data.bets)
     if (errors.length > 0) return response.status(422).send({ errors })
 
+    let betsPlaced: BetPlaced[] = []
     const prices = data.bets.map(async (bet) => {
       const game = await Game.findByOrFail('id', bet.gameId)
 
-      await Bet.create({
+      let betPlaced = await Bet.create({
         gameId: bet.gameId,
         userId: user.id,
         numbers: bet.numbers.join(','),
+      })
+
+      betsPlaced.push({
+        game: game.type,
+        color: game.color,
+        numbers: betPlaced.numbers,
       })
 
       return Number(game.price)
@@ -68,7 +82,53 @@ export default class BetsController {
     let pricesResolved = await Promise.all(prices)
     let totalPrice = pricesResolved.reduce((total: number, current: number) => total + current)
 
-    await new NewBet(user, formatter.format(totalPrice ? totalPrice : 0)).sendLater()
+    await producer.connect()
+    await producer.sendMessage(
+      [
+        {
+          value: JSON.stringify({
+            contact: {
+              name: user.name,
+              email: user.email,
+            },
+            bets: {
+              totalPrice: formatter.format(totalPrice),
+              arrayBets: betsPlaced,
+            },
+            template: 'new-bets-user',
+          }),
+        },
+      ],
+      'mailer-event'
+    )
+    await producer.disconect()
+
+    const admins = await User.query().where('is_admin', true)
+
+    admins.forEach(async (admin) => {
+      await producer.connect()
+      await producer.sendMessage(
+        [
+          {
+            value: JSON.stringify({
+              contact: {
+                name: admin.name,
+                email: admin.email,
+              },
+              bets: {
+                totalPrice: formatter.format(totalPrice),
+                arrayBets: betsPlaced,
+              },
+              username: user.name,
+              template: 'new-bets-admin',
+            }),
+          },
+        ],
+        'mailer-event'
+      )
+      await producer.disconect()
+    })
+
     return { totalPrice: formatter.format(totalPrice ? totalPrice : 0) }
   }
 

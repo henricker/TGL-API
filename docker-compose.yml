@@ -31,15 +31,6 @@ services:
       - "3333:3333"
     command: npm start
 
-  migration:
-    container_name: tgl_api_migration
-    build: .
-    image: tgl_api
-    depends_on: 
-      - db
-    command: node ace migration:run
-  
-
   sheduler:
     container_name: tgl_api_sheduler
     build: .

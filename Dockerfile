@@ -3,3 +3,4 @@ WORKDIR /usr/app
 COPY build .
 COPY .env .
 RUN npm ci --production
+ENTRYPOINT [ "init.sh" ]
