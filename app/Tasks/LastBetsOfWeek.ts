@@ -6,9 +6,9 @@ import moment from 'moment'
 import Game from '../Models/Game'
 import { formatter } from 'App/util/formatter-real'
 
-export default class LastBetsOfDayTask extends BaseTask {
+export default class LastBetsOfWeekTask extends BaseTask {
   public static get schedule() {
-    return '0 0 17 * * *'
+    return '0 0 17 * * 5'
   }
 
   public static get useLock() {
@@ -19,7 +19,7 @@ export default class LastBetsOfDayTask extends BaseTask {
     const admin = await User.query().where('isAdmin', true)
     const games = await Game.query()
     const bets = (await Bet.query().preload('game')).filter((bet) =>
-      moment().subtract('1', 'day').isBefore(bet.createdAt.toJSDate())
+      moment().subtract('7', 'days').isBefore(bet.createdAt.toJSDate())
     )
 
     const gamesPlaced = bets.map((bet) => bet.game)
@@ -55,7 +55,7 @@ export default class LastBetsOfDayTask extends BaseTask {
                 totalPrice: formatter.format(totalPrice),
                 gamesRelatory,
               },
-              template: 'daily-reports-admin',
+              template: 'weekly-reports-admin',
             }),
           },
         ],
