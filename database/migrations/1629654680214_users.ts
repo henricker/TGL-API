@@ -9,7 +9,7 @@ export default class UsersSchema extends BaseSchema {
       table.string('name').notNullable()
       table.string('email', 255).notNullable()
       table.string('password', 180).notNullable()
-      table.boolean('is_admin').nullable()
+      table.integer('role_id').unsigned().references('id').inTable('roles')
       table.timestamp('last_bet').nullable()
       table.string('remember_me_token').nullable()
       table.timestamp('token_created_at').nullable()
