@@ -7,7 +7,7 @@ export default class AdminsController {
     try {
       const userId = params['userId']
       const user = await User.findByOrFail('id', userId)
-      user.isAdmin = true
+      user.roleId = 1
       await user.save()
 
       return response.send('user promoted')
@@ -20,7 +20,7 @@ export default class AdminsController {
     try {
       const userId = params['userId']
       const user = await User.findByOrFail('id', userId)
-      user.isAdmin = false
+      user.roleId = 2
       await user.save()
 
       return response.send('user demoted')

@@ -16,7 +16,7 @@ export default class LastBetsOfMonthTask extends BaseTask {
   }
 
   public async handle() {
-    const admin = await User.query().where('isAdmin', true)
+    const admin = await User.query().where('roleId', 1)
     const games = await Game.query()
     const bets = (await Bet.query().preload('game')).filter((bet) =>
       moment().subtract('30', 'days').isBefore(bet.createdAt.toJSDate())

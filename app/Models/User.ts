@@ -23,7 +23,7 @@ export default class User extends BaseModel {
   public email: string
 
   @column()
-  public isAdmin: boolean
+  public roleId: number
 
   @column({ serializeAs: null })
   public password: string

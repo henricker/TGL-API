@@ -13,7 +13,7 @@ export default class RememberUserToBetTask extends BaseTask {
   }
 
   public async handle() {
-    const users = await User.query().where('is_admin', false)
+    const users = await User.query().where('roleId', 2)
     users.forEach(async (user) => {
       if (!user.lastBet || (user.lastBet && moment().subtract('7', 'days').isAfter(user.lastBet))) {
         await producer.connect()
