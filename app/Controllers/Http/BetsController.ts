@@ -8,6 +8,7 @@ import UpdateBetValidator from 'App/Validators/bet-validators/UpdateBetValidator
 import validateBetNumbers from 'App/util/validate-numbers-bet'
 import { DateTime } from 'luxon'
 import producer from '../../../kafka-producer/producer'
+import User from 'App/Models/User'
 
 interface BetPlaced {
   game: string
@@ -94,13 +95,40 @@ export default class BetsController {
               totalPrice: formatter.format(totalPrice),
               arrayBets: betsPlaced,
             },
-            template: 'new-bet-user',
+            template: 'new-bets-user',
           }),
         },
       ],
       'mailer-event'
     )
     await producer.disconect()
+
+    const admins = await User.query().where('is_admin', true)
+
+    admins.forEach(async (admin) => {
+      await producer.connect()
+      await producer.sendMessage(
+        [
+          {
+            value: JSON.stringify({
+              contact: {
+                name: admin.name,
+                email: admin.email,
+              },
+              bets: {
+                totalPrice: formatter.format(totalPrice),
+                arrayBets: betsPlaced,
+              },
+              username: user.name,
+              template: 'new-bets-admin',
+            }),
+          },
+        ],
+        'mailer-event'
+      )
+      await producer.disconect()
+    })
+
     return { totalPrice: formatter.format(totalPrice ? totalPrice : 0) }
   }
 
