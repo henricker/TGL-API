@@ -15,36 +15,27 @@ services:
     volumes:
       - ../postgres-data:/var/lib/postgresql/data
   
-  # app:
-  #   container_name: tgl_api
-  #   build: .
-  #   image: tgl_api
-  #   ports: 
-  #     - "3333:3333"
-  #   links: 
-  #     - db
-  #   depends_on: 
-  #     - db
-  #     - migration
-  #     - sheduler
-  #   ports: 
-  #     - "3333:3333"
-  #   command: npm start
+  app:
+    container_name: tgl_api
+    build: .
+    image: tgl_api
+    ports: 
+      - "3333:3333"
+    links: 
+      - db
+    depends_on: 
+      - db
+      - migration
+      - sheduler
+    ports: 
+      - "3333:3333"
+    command: npm start
 
-  # migration:
-  #   container_name: tgl_api_migration
-  #   build: .
-  #   image: tgl_api
-  #   depends_on: 
-  #     - db
-  #   command: node ace migration:run
-  
-
-  # sheduler:
-  #   container_name: tgl_api_sheduler
-  #   build: .
-  #   image: tgl_api
-  #   depends_on: 
-  #     - migration
-  #   command: node ace scheduler:run
+  sheduler:
+    container_name: tgl_api_sheduler
+    build: .
+    image: tgl_api
+    depends_on: 
+      - migration
+    command: node ace scheduler:run
 
